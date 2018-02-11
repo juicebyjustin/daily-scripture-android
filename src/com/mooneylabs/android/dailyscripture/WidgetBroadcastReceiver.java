@@ -50,10 +50,10 @@ public class WidgetBroadcastReceiver extends AppWidgetProvider {
                 R.layout.widget_layout);
         Log.w("WidgetExample", String.valueOf(289078));
         // Set the text
-        remoteViews.setTextViewText(R.id.textView_widget_verse, String.valueOf(289078));
+        /*remoteViews.setTextViewText(R.id.textView_widget_verse, String.valueOf(289078));
         remoteViews.setTextViewText(R.id.textView_widget_book, String.valueOf(289078));
         remoteViews.setTextViewText(R.id.textView_widget_date, String.valueOf(289078));
-
+*/
 
         // Build the intent to call the service
         Intent intent = new Intent(context.getApplicationContext(),

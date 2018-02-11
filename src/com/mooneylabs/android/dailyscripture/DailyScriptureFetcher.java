@@ -19,14 +19,21 @@ import java.util.Calendar;
  * Time: 5:30 PM
  * To change this template use File | Settings | File Templates.
  */
-//may need to extend IntentService
 
+/**
+ * This fetches the daily scripture.
+ * TODO: search in the database first for the scripture. Say they open app multiple times in a single day.
+  */
 public class DailyScriptureFetcher extends IntentService {
     public Verse verse;
     private int result = Activity.RESULT_CANCELED;
+    //public HiddenPreferences hiddenPreferences;
 
     public DailyScriptureFetcher(){
         super("DailyScriptureFetcher");
+
+        //hiddenPreferences = new HiddenPreferences();
+        //hiddenPreferences.setAppLaunches(15);
     }
 
     @Override
@@ -60,6 +67,8 @@ public class DailyScriptureFetcher extends IntentService {
         }
 
         Bundle extras = intent.getExtras();
+
+        //return the verse object
         if(extras != null){
             Messenger messenger = (Messenger) extras.get("MESSENGER");
             Message msg = Message.obtain();

@@ -6,13 +6,6 @@
     <PreferenceCategory
             android:title="General" >
 
-<!--
-        <CheckBoxPreference
-                android:key="@string/pref_key_load_img"
-                android:defaultValue="false"
-                android:title="Auto Load Images" />
-                -->
-
         <ListPreference
                 android:key="@string/pref_key_language"
                 android:defaultValue="@string/pref_lang_english"
@@ -56,4 +49,18 @@
             android:title="About Daily Scripture"
             android:key="@string/pref_key_about"/>
         </PreferenceCategory>
+
+    <Preference
+            android:title="@string/donate"
+            android:key="@string/pref_key_about_donate"
+            android:summary="Show your gratitude. (50% to charity)"
+            android:defaultValue="false">
+    </Preference>
+
+    <Preference
+            android:title="Version"
+            android:key="@string/pref_key_about_version"
+            android:summary="1.1.1"
+            android:defaultValue="1.1.1">
+    </Preference>
 </PreferenceScreen>

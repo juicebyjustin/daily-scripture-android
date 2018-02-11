@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/dailyscripture.iml" filepath="$PROJECT_DIR$/dailyscripture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../libraries/JakeWharton/ActionBarSherlock/v4.4/v4.4.iml" filepath="$PROJECT_DIR$/../libraries/JakeWharton/ActionBarSherlock/v4.4/v4.4.iml" />
     </modules>
   </component>
 </project>

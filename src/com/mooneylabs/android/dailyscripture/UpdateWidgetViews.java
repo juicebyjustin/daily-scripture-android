@@ -151,9 +151,9 @@ public class UpdateWidgetViews extends Service {
          */
         if(context != null){
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            remoteViews.setTextViewText(R.id.textView_widget_date, verse.textDate);
-            remoteViews.setTextViewText(R.id.textView_widget_book, verse.book);
-            remoteViews.setTextViewText(R.id.textView_widget_verse, verse.verse);
+          //  remoteViews.setTextViewText(R.id.textView_widget_date, verse.textDate);
+          //  remoteViews.setTextViewText(R.id.textView_widget_book, verse.book);
+          //  remoteViews.setTextViewText(R.id.textView_widget_verse, verse.verse);
         }
         else{
             Log.v("Daily", "context is null not updating the verse details");

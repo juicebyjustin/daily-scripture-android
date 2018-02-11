@@ -3,6 +3,7 @@ package com.mooneylabs.android.dailyscripture;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 import com.actionbarsherlock.app.ActionBar;
 
@@ -125,6 +126,23 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
             this.setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light_DarkActionBar);
     }
 
+    /**
+     * Item listener. Used for donate button
+     * @param preferenceScreen
+     * @param preference
+     * @return
+     */
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        String key = preference.getKey();
+
+        if(key.equals(getString(R.string.pref_key_about_donate))){
+            //TODO: do donate action
+        }
+
+        return super.onPreferenceTreeClick(preferenceScreen, preference);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key){
         Log.v("Daily", key);
@@ -139,7 +157,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
 
         boolean mIsAlarmSet = sharedPreferences.getBoolean(getString(R.string.pref_key_daily_reminder), false);
 
-                /* this is a double notification, one for when minute sets and another for when hour sets */
+        /* this is a double notification, one for when minute sets and another for when hour sets */
         if(key.equals(keyTime + ".hour") || key.equals(keyTime + ".minute")){
             /**
              * set the alarm

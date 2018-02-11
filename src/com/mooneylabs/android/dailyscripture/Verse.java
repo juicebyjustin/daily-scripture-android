@@ -277,7 +277,7 @@ public class Verse {
                 //thoughts = thoughts.substring(thoughts.lastIndexOf(">")).replace(">", "");
             }
 
-            verse = verse.replace("&#8212;", "-");
+            thoughts = thoughts.replace("&#8212;", "-");
 
         }
         catch (Exception ex){

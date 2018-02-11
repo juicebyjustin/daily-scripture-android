@@ -31,6 +31,8 @@ import java.util.*;
 
 import java.security.*;
 
+//TODO: android backup settings auto: http://developer.android.com/google/backup/index.html
+
 public class MyActivity extends SherlockFragmentActivity implements DatePickerDialog.OnDateSetListener {
 
     Verse verse;
@@ -39,9 +41,6 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
     int year;
     int month;
     int day;
-
-    ArrayList<VerseDate> PreviousDates;
-    int previousDatePointer;
 
     //shareing
     private ShareActionProvider mShareActionProvider;
@@ -60,6 +59,9 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
     public void onCreate(Bundle savedInstanceState) {
         Log.v("state", "onCreate called");
 
+
+
+
         /*
         set default values only one time.
         This will be called only onece. Stack overflow link:
@@ -74,11 +76,21 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
         String theme = appPreferences.getString(this.getString(R.string.pref_key_theme), null);
         String holoDark = getString(R.string.pref_theme_holo_dark);
 
-        if(theme != null){
-            if(theme.equals(holoDark))
-                setTheme(android.R.style.Theme_Holo);
-            else
-                setTheme(android.R.style.Theme_Holo_Light_DarkActionBar);
+        if(Build.VERSION.SDK_INT < 14){
+            if(theme != null){
+                if(theme.equals(holoDark))
+                    setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+                else
+                    setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light_DarkActionBar);
+            }
+        }
+        else{
+            if(theme != null){
+                if(theme.equals(holoDark))
+                    setTheme(android.R.style.Theme_Holo);
+                else
+                    setTheme(android.R.style.Theme_Holo_Light_DarkActionBar);
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -104,12 +116,6 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
         this.month = this.calendar.get(Calendar.MONTH);
         this.day = this.calendar.get(Calendar.DAY_OF_MONTH);
 
-        //no need to do this
-        //this.setVerseObject();
-
-        this.PreviousDates = new ArrayList<VerseDate>();
-        this.previousDatePointer = 0;
-
         /**
          * get the extra from the intent
          */
@@ -117,15 +123,12 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
 
         /*
         set the date, this restores it
-        if onrestore, dont reload verse
+        if on restore, doesn't reload verse
          */
         if(this.verse == null){
             this.onDateSet(null, this.year, this.month,  this.day);
             this.onRestore = false;
         }
-
-       // NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        //mNotificationManager.cancel(956956);//.cancel(1);
     }
 
     /**
@@ -169,14 +172,6 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
 
     }
 
-    private void addPreviousVerseDate(int year, int month, int day){
-        VerseDate vd = new VerseDate(year, month, day);
-        this.PreviousDates.add(vd);
-        this.previousDatePointer++;
-
-        Log.v("date", "verse date added: " + month + day + year);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getSupportMenuInflater();
@@ -207,12 +202,60 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
     }
 
     public Intent getDefaultShareIntent(){
+        return BuildButtonDialog(verse);
+    }
 
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "\"" + this.verse.verse + "\" -" + this.verse.book);
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
+    /*
+    credit: http://learnandroideasily.blogspot.com/2013/01/adding-radio-buttons-in-dialog.html
+     */
+    public Intent BuildButtonDialog(final Verse scripture){
+        final AlertDialog levelDialog;
+        final Intent sendIntent = new Intent();
+
+        // Strings to Show In Dialog with Radio Buttons
+        final CharSequence[] items = {" Scripture "," Scripture & Thoughts "," Everything "};
+        //final Sequen bItems = { true, false, false };
+
+        // Creating and Building the Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("What do you want to Share?");
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                String extraText = "";
+                String option0 = "\"" + scripture.verse + "\" -" + scripture.book;
+                String option1 = option0 + "\n\nThoughts:\n" + scripture.thoughts;
+                String option2 = option0 + option1 + "\n\nPrayer:\n" + scripture.prayer;
+                String copyRight = "\n\nAll Text © 1998-" +  Calendar.getInstance().get(Calendar.YEAR) + ", Heartlight, Inc.\n" +
+                        "Provided by Daily Scripture on Android";
+
+                switch(item)
+                {
+                    case 0:
+                        extraText = option0;
+                        break;
+                    case 1:
+                        extraText = option1;
+                        break;
+                    case 2:
+                        extraText = option2;
+                        break;
+                }
+
+                extraText += copyRight;
+
+                dialog.dismiss();
+
+                //sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
+
+        levelDialog = builder.create();
+
+        levelDialog.show();
 
         return sendIntent;
     }
@@ -296,14 +339,13 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
 
 
     /**
-     * called when the date is set by the date picker
+     * called when the date is set by the date picker and loads the scripture
      * @param year
      * @param month
      * @param day
      */
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-
         if(year < 1998){
             //source: http://www.mkyong.com/android/android-alert-dialog-example/
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -516,6 +558,7 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
          */
         String ip = new Helper().isConnectedToInternet();
 
+        //set screen if no internet connection to retry button
         if(ip == null){
             //source: http://www.mkyong.com/android/android-alert-dialog-example/
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -559,6 +602,7 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
             return;
         }
 
+        //download the scripture
         try{
             new LongOperation(this.verse, this).execute("");
         }
@@ -782,8 +826,8 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
         return hex.toString();
     }
 
-    public void postToMySQL(){
-        if(Build.VERSION.SDK_INT > 8){
+   /* public void postToMySQL(){
+        *//*if(Build.VERSION.SDK_INT > 8){
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
@@ -791,9 +835,9 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
         String date = this.verse.getYear() + "-" + this.verse.getMonth() + "-" + this.verse.getDay();
         String androidVersion = Integer.toString(Build.VERSION.SDK_INT);
 
-        /**
+        *//**//**
          * get md5 hash of device id to keep it secure
-         */
+         *//**//*
         String uniqueId = md5(id(this));
         String deviceId = md5(Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
 
@@ -838,9 +882,9 @@ public class MyActivity extends SherlockFragmentActivity implements DatePickerDi
         catch(IOException e)
         {
             // Error
-        }
+        }*//*
 
-    }
+    }*/
 
 
     protected ProgressDialog progressDialog;

@@ -87,7 +87,7 @@
     <string name="label_about_activity">About Daily Scripture</string>
 
     <!-- about screen-->
-    <string name="donate">Donate Version</string>
+    <string name="donate">Donate</string>
 
     <string name="about_first_row_free"><![CDATA[<justify><h1>Special Thanks To</h1>
         <a href="http://www.verseoftheday.com">VerseOfTheDay.com</a> - for providing the daily scripture. Daily Scripture
@@ -111,5 +111,23 @@
         <a href="https://code.google.com/p/android-ui-utils/">Android-UI-Utils</a> - for providing all of the icons
         and images on the Play Store.
         </justify> ]]></string>
+    <string name="pref_key_about_version">pref_key_about_version</string>
+    <string name="pref_key_about_donate">pref_key_about_donate</string>
+    <string name="pref_hidden_title_donated">Donated</string>
+    <string name="pref_hidden_donated_summary">receive a daily reminder</string>
+    <string name="pref_hidden_donated_title">Have You Donated</string>
+    <string name="pref_hidden_has_rated_key">Rated</string>
+    <string name="pref_hidden_ask_to_donate_key">AskToDonate</string>
+    <string name="pref_hidden_ask_to_donate_summary">Bool for user asked to hide donate menu</string>
+    <string name="pref_hidden_ask_to_donate_title">Ask to Donate</string>
+    <string name="pref_hidden_has_rated_summary">Bool for if the user has the user rated</string>
+    <string name="pref_hidden_has_rated_title">Has the User Rated?</string>
+    <string name="pref_hidden_ask_to_rate_key">AskToRate</string>
+    <string name="pref_hidden_ask_to_rate_summary">Bool Ask a user to rate</string>
+    <string name="pref_hidden_ask_to_rate_title">Ask the User to Rate</string>
+    <string name="pref_hidden_launch_count_key">LaunchCount</string>
+    <string name="pref_hidden_launch_count_title">App Launch Count</string>
+    <string name="pref_hidden_launch_count_summary">Keep track of launch count</string>
+    <string name="pref_key_hidden_has_donated">Has User Donated</string>
 
 </resources>
