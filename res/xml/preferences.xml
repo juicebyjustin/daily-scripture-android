@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/activity_preferences">
+    <PreferenceCategory
+            android:title="General" >
+
+<!--
+        <CheckBoxPreference
+                android:key="@string/pref_key_load_img"
+                android:defaultValue="false"
+                android:title="Auto Load Images" />
+                -->
+
+        <ListPreference
+                android:key="@string/pref_key_language"
+                android:defaultValue="@string/pref_lang_english"
+                android:title="@string/pref_title_lang"
+                android:entries="@array/langOptions"
+                android:entryValues="@array/langValues"
+                android:dialogTitle="@string/pref_dialog_title_lang" />
+
+        <ListPreference
+            android:key="@string/pref_key_theme"
+            android:defaultValue="@string/pref_theme_holo_dark"
+            android:title="App Theme"
+            android:summary="requires app restart"
+            android:entries="@array/prefTheme"
+            android:entryValues="@array/prefThemeValues"
+            android:dialogTitle="@string/pref_them_dialog_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Reminder" >
+        <CheckBoxPreference
+                android:key="@string/pref_key_daily_reminder"
+                android:summary="receive a daily reminder"
+                android:defaultValue="false"
+                android:title="Daily Reminder" />
+
+        <!-- time picker preference goes here -->
+        <com.mooneylabs.android.dailyscripture.PreferenceTime
+            android:name="Default notification time"
+            android:summary="what time to be notified each day"
+            android:dialogLayout="@layout/time_preference"
+            android:title="Daily Notification Time"
+            android:key="@string/pref_key_daily_reminder_time" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About">
+
+        <Preference
+            android:title="About Daily Scripture"
+            android:key="@string/pref_key_about"/>
+        </PreferenceCategory>
+</PreferenceScreen>

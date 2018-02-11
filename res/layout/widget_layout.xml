@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="asdf"
+            android:id="@+id/textView_widget_date" android:layout_alignParentLeft="true" android:layout_marginLeft="8dp"
+            android:layout_alignTop="@+id/imageButton_pickDate"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:id="@+id/textView_widget_verse"
+            android:layout_alignLeft="@+id/textView_widget_date" android:layout_below="@+id/textView_widget_date"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="asd"
+            android:id="@+id/textView_widget_book"
+            android:layout_alignLeft="@+id/textView_widget_date" android:layout_below="@+id/textView_widget_verse"/>
+</RelativeLayout>
